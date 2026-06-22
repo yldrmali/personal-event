@@ -138,7 +138,7 @@ const PersonBlock = ({ person, role, fadeUp }) => (
       <span className={cn("text-gray-500")}>{person.mother}</span>
       {" & "}
       <span className={cn("text-gray-500")}>{person.father}</span>
-      {role === "oğlu" ? "'nin değerli oğlu" : "'nin değerli kızı"}
+      {role === "oğlu" ? "'ın değerli oğlu" : "'ın değerli kızı"}
     </p>
     <p className={cn("text-3xl font-serif text-gray-800 leading-tight")}>
       {person.firstName}{" "}{person.lastName}
