@@ -1,6 +1,6 @@
 const config = {
   data: {
-    title: "Emre & Hande Evleniyor",
+    title: "Ali & Nebile Evleniyor",
     description:
       "Sizi bu özel günümüzde aramızda görmekten büyük mutluluk duyacağız.",
 

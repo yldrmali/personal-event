@@ -1,4 +1,4 @@
-import { Heart } from "lucide-react";
+import { Flower2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useCallback, useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
@@ -37,7 +37,7 @@ const CountdownTimer = ({ targetDate, scaleIn }) => {
 
   return (
     <div className={cn("w-full space-y-3")}>
-      <p className={cn("text-center text-[9px] uppercase tracking-[4px] text-rose-300")}>
+      <p className={cn("text-center text-[9px] uppercase tracking-[4px] text-[#8BA052]")}>
         Nikaha Kalan
       </p>
       <div className={cn("grid grid-cols-4 gap-2")}>
@@ -49,10 +49,10 @@ const CountdownTimer = ({ targetDate, scaleIn }) => {
             animate="visible"
             className={cn(
               "flex flex-col items-center py-3 rounded-2xl",
-              "bg-white/60 backdrop-blur-sm border border-rose-100/60",
+              "bg-white/60 backdrop-blur-sm border border-[#DCE8C0]/60",
             )}
           >
-            <span className={cn("text-2xl font-serif text-rose-700 leading-none tabular-nums")}>
+            <span className={cn("text-2xl font-serif text-[#4E6228] leading-none tabular-nums")}>
               {String(value).padStart(2, "0")}
             </span>
             <span className={cn("text-[9px] text-gray-400 mt-1 uppercase tracking-wide")}>{label}</span>
@@ -63,19 +63,39 @@ const CountdownTimer = ({ targetDate, scaleIn }) => {
   );
 };
 
-// ── floating hearts ───────────────────────────────────────────────────────────
+// ── balloon svg ───────────────────────────────────────────────────────────────
 
-const FloatingHearts = () => {
-  const [hearts] = useState(() =>
+const BalloonSvg = ({ size, className }) => (
+  <svg
+    width={size}
+    height={Math.round(size * 1.5)}
+    viewBox="0 0 20 30"
+    className={className}
+    fill="currentColor"
+  >
+    <ellipse cx="10" cy="10" rx="9" ry="10" />
+    <polygon points="8.5,19.5 11.5,19.5 10,22" />
+    <path d="M10 22 Q7 25.5 10 29" fill="none" stroke="currentColor" strokeWidth="0.9" />
+  </svg>
+);
+
+// ── floating balloons ─────────────────────────────────────────────────────────
+
+const FloatingBalloons = () => {
+  const [balloons] = useState(() =>
     [...Array(8)].map((_, i) => ({
       left: `${5 + i * 12}%`,
       size: 12 + (i % 3) * 6,
-      color:
-        i % 3 === 0
-          ? "text-rose-200"
-          : i % 3 === 1
-            ? "text-pink-200"
-            : "text-rose-300",
+      colorClass:
+        i % 5 === 0
+          ? "text-amber-400"
+          : i % 5 === 1
+            ? "text-orange-300"
+            : i % 5 === 2
+              ? "text-yellow-400"
+              : i % 5 === 3
+                ? "text-amber-300"
+                : "text-orange-400",
       duration: 7 + (i % 4) * 2,
       delay: i * 0.9,
     })),
@@ -83,17 +103,15 @@ const FloatingHearts = () => {
 
   return (
     <div className={cn("absolute inset-0 overflow-hidden pointer-events-none")}>
-      {hearts.map((h, i) => (
+      {balloons.map((b, i) => (
         <motion.div
           key={i}
-          className={cn("absolute", h.color)}
-          style={{ left: h.left, bottom: "-5%" }}
-          animate={{
-            y: [0, -(typeof window !== "undefined" ? window.innerHeight * 1.15 : 800)],
-          }}
-          transition={{ duration: h.duration, repeat: Infinity, delay: h.delay, ease: "linear" }}
+          className={cn("absolute", b.colorClass)}
+          style={{ left: b.left, bottom: "-5%" }}
+          animate={{ y: [0, -(typeof window !== "undefined" ? window.innerHeight * 1.15 : 800)] }}
+          transition={{ duration: b.duration, repeat: Infinity, delay: b.delay, ease: "linear" }}
         >
-          <Heart style={{ width: h.size, height: h.size }} fill="currentColor" opacity={0.45} />
+          <BalloonSvg size={b.size} />
         </motion.div>
       ))}
     </div>
@@ -102,13 +120,13 @@ const FloatingHearts = () => {
 
 // ── ornament ──────────────────────────────────────────────────────────────────
 
-const HeartDivider = () => (
+const FlowerDivider = () => (
   <div className={cn("flex items-center justify-center gap-1.5")}>
-    <div className={cn("h-px flex-1 bg-gradient-to-r from-transparent to-rose-200")} />
-    <Heart className={cn("w-2.5 h-2.5 text-rose-200")} fill="currentColor" />
-    <Heart className={cn("w-3.5 h-3.5 text-rose-300")} fill="currentColor" />
-    <Heart className={cn("w-2.5 h-2.5 text-rose-200")} fill="currentColor" />
-    <div className={cn("h-px flex-1 bg-gradient-to-l from-transparent to-rose-200")} />
+    <div className={cn("h-px flex-1 bg-gradient-to-r from-transparent to-[#C8D4A0]")} />
+    <Flower2 className={cn("w-2.5 h-2.5 text-[#C8D4A0]")} />
+    <Flower2 className={cn("w-3.5 h-3.5 text-[#8BA052]")} />
+    <Flower2 className={cn("w-2.5 h-2.5 text-[#C8D4A0]")} />
+    <div className={cn("h-px flex-1 bg-gradient-to-l from-transparent to-[#C8D4A0]")} />
   </div>
 );
 
@@ -123,8 +141,7 @@ const PersonBlock = ({ person, role, fadeUp }) => (
       {role === "oğlu" ? "'nin değerli oğlu" : "'nin değerli kızı"}
     </p>
     <p className={cn("text-3xl font-serif text-gray-800 leading-tight")}>
-      {person.firstName}{" "}
-      <span className={cn("font-light text-2xl")}>{person.lastName}</span>
+      {person.firstName}{" "}{person.lastName}
     </p>
   </motion.div>
 );
@@ -144,12 +161,12 @@ export default function Hero() {
       className={cn(
         "min-h-screen flex flex-col items-center justify-center px-6 py-16 text-center relative overflow-hidden",
       )}
-      style={{ background: "linear-gradient(160deg, #fdf8f6 0%, #fef0f0 50%, #fdf8f6 100%)" }}
+      style={{ background: "linear-gradient(160deg, #fdfcf8 0%, #f5efe3 50%, #fdfcf8 100%)" }}
     >
-      <div className={cn("absolute top-1/4 -left-16 w-56 h-56 bg-rose-100/40 rounded-full blur-3xl")} />
-      <div className={cn("absolute bottom-1/4 -right-16 w-56 h-56 bg-pink-100/40 rounded-full blur-3xl")} />
+      <div className={cn("absolute top-1/4 -left-16 w-56 h-56 bg-amber-100/40 rounded-full blur-3xl")} />
+      <div className={cn("absolute bottom-1/4 -right-16 w-56 h-56 bg-yellow-50/50 rounded-full blur-3xl")} />
 
-      {!reduceMotion && <FloatingHearts />}
+      {!reduceMotion && <FloatingBalloons />}
 
       <motion.div
         variants={staggerContainer()}
@@ -159,32 +176,31 @@ export default function Hero() {
       >
         <motion.p
           variants={fade}
-          className={cn("text-[9px] uppercase tracking-[5px] text-rose-300")}
+          className={cn("text-[9px] uppercase tracking-[5px] text-[#8BA052]")}
         >
           Nikah Davetiyesi
         </motion.p>
 
         <motion.div variants={scaleIn}>
-          <HeartDivider />
+          <FlowerDivider />
         </motion.div>
 
-        {/* Family card */}
         <motion.div
           variants={fadeUp}
           className={cn(
-            "bg-white/60 backdrop-blur-sm rounded-3xl border border-rose-100/70 px-6 py-8 space-y-6",
-            "shadow-[0_4px_30px_rgba(244,63,94,0.08)]",
+            "bg-white/60 backdrop-blur-sm rounded-3xl border border-[#DCE8C0]/70 px-6 py-8 space-y-6",
+            "shadow-[0_4px_30px_rgba(107,122,58,0.08)]",
           )}
         >
-          <PersonBlock person={config.groom} role="oğlu" fadeUp={fadeUp} />
+          <PersonBlock person={config.bride} role="kızı" fadeUp={fadeUp} />
 
           <div className={cn("flex items-center justify-center gap-3")}>
-            <div className={cn("h-px flex-1 bg-rose-100")} />
+            <div className={cn("h-px flex-1 bg-[#DCE8C0]")} />
             <motion.div
               animate={
                 reduceMotion
                   ? undefined
-                  : { scale: [1, 1.2, 1], rotate: [0, 10, -10, 0] }
+                  : { scale: [1, 1.2, 1], rotate: [0, 15, -15, 0] }
               }
               transition={
                 reduceMotion
@@ -192,16 +208,16 @@ export default function Hero() {
                   : { duration: LOOP.pulse, repeat: Infinity, ease: EASE.inOut }
               }
             >
-              <Heart className={cn("w-5 h-5 text-rose-400")} fill="currentColor" />
+              <Flower2 className={cn("w-5 h-5 text-[#8BA052]")} />
             </motion.div>
-            <div className={cn("h-px flex-1 bg-rose-100")} />
+            <div className={cn("h-px flex-1 bg-[#DCE8C0]")} />
           </div>
 
-          <PersonBlock person={config.bride} role="kızı" fadeUp={fadeUp} />
+          <PersonBlock person={config.groom} role="oğlu" fadeUp={fadeUp} />
         </motion.div>
 
         <motion.div variants={scaleIn}>
-          <HeartDivider />
+          <FlowerDivider />
         </motion.div>
 
         <CountdownTimer targetDate={config.nikah.date} scaleIn={scaleIn} />

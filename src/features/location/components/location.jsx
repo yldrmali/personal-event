@@ -7,10 +7,10 @@ import {
   ExternalLink,
   Map,
   Flame,
-  Heart,
+  Flower2,
   CalendarPlus,
   X,
-  Chrome,
+  Globe,
   Apple,
   Calendar as CalendarIcon,
 } from "lucide-react";
@@ -84,21 +84,21 @@ const CalendarModal = ({ isOpen, onClose, event, label, config }) => {
   return (
     <AnimatePresence>
       {isOpen && (
-        <>
+        <div className={cn("fixed inset-0 z-[60] flex items-center justify-center px-6")}>
           <motion.div
             variants={fade}
             initial="hidden"
             animate="visible"
             exit="exit"
             onClick={onClose}
-            className={cn("fixed inset-0 bg-black/40 backdrop-blur-sm z-[60]")}
+            className={cn("absolute inset-0 bg-black/40 backdrop-blur-sm")}
           />
           <motion.div
             variants={fadeUp}
             initial="hidden"
             animate="visible"
             exit="exit"
-            className={cn("fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[70] w-[88%] max-w-sm")}
+            className={cn("relative z-10 w-full max-w-sm")}
           >
             <div className={cn("bg-white rounded-3xl p-6 shadow-2xl border border-gray-100 space-y-5")}>
               <div className={cn("flex justify-between items-center")}>
@@ -117,9 +117,9 @@ const CalendarModal = ({ isOpen, onClose, event, label, config }) => {
               <div className={cn("space-y-2.5")}>
                 {[
                   {
-                    icon: Chrome,
+                    icon: Globe,
                     label: "Google Takvim",
-                    color: "text-rose-500",
+                    color: "text-[#6B7A3A]",
                     action: () => window.open(googleCalendarLink(event, label, config), "_blank"),
                   },
                   {
@@ -150,7 +150,7 @@ const CalendarModal = ({ isOpen, onClose, event, label, config }) => {
               </div>
             </div>
           </motion.div>
-        </>
+        </div>
       )}
     </AnimatePresence>
   );
@@ -170,7 +170,6 @@ const VenueCard = ({ label, icon: Icon, accentClass, event, fadeUp, config }) =>
         viewport={{ once: true }}
         className={cn("space-y-4")}
       >
-        {/* Map or fallback */}
         {isValidEmbedUrl(event.maps_embed) ? (
           <div className={cn("w-full h-52 rounded-2xl overflow-hidden shadow-md border-4 border-white")}>
             <iframe
@@ -191,16 +190,15 @@ const VenueCard = ({ label, icon: Icon, accentClass, event, fadeUp, config }) =>
             rel="noopener noreferrer"
             className={cn(
               "flex flex-col items-center justify-center gap-3 w-full h-52 rounded-2xl",
-              "border-2 border-dashed border-rose-200 bg-rose-50/50 hover:bg-rose-50 transition-colors",
+              "border-2 border-dashed border-[#C8D4A0] bg-[#f5f2e8]/60 hover:bg-[#f0ece0] transition-colors",
             )}
           >
-            <Map className={cn("w-7 h-7 text-rose-300")} />
-            <span className={cn("text-sm font-medium text-rose-400")}>Haritada Aç</span>
+            <Map className={cn("w-7 h-7 text-[#8BA052]")} />
+            <span className={cn("text-sm font-medium text-[#6B7A3A]")}>Haritada Aç</span>
           </a>
         )}
 
-        {/* Details */}
-        <div className={cn("bg-white/70 backdrop-blur-sm rounded-2xl p-5 border border-rose-100/60 space-y-4")}>
+        <div className={cn("bg-white/70 backdrop-blur-sm rounded-2xl p-5 border border-[#DCE8C0]/60 space-y-4")}>
           <div className={cn("flex items-center gap-2.5")}>
             <div className={cn("w-8 h-8 rounded-full flex items-center justify-center shrink-0", accentClass.bg)}>
               <Icon className={cn("w-4 h-4", accentClass.icon)} />
@@ -213,20 +211,19 @@ const VenueCard = ({ label, icon: Icon, accentClass, event, fadeUp, config }) =>
 
           <div className={cn("space-y-2.5 text-sm text-gray-500")}>
             <div className={cn("flex items-start gap-3")}>
-              <MapPin className={cn("w-4 h-4 text-rose-300 mt-0.5 shrink-0")} />
+              <MapPin className={cn("w-4 h-4 text-[#8BA052] mt-0.5 shrink-0")} />
               <p>{event.address}</p>
             </div>
             <div className={cn("flex items-center gap-3")}>
-              <CalendarCheck className={cn("w-4 h-4 text-rose-300 shrink-0")} />
+              <CalendarCheck className={cn("w-4 h-4 text-[#8BA052] shrink-0")} />
               <p>{formatEventDate(event.date)}</p>
             </div>
             <div className={cn("flex items-center gap-3")}>
-              <Clock className={cn("w-4 h-4 text-rose-300 shrink-0")} />
+              <Clock className={cn("w-4 h-4 text-[#8BA052] shrink-0")} />
               <p>{event.startTime} – {event.endTime}</p>
             </div>
           </div>
 
-          {/* Two action buttons */}
           <div className={cn("grid grid-cols-2 gap-2")}>
             <motion.a
               href={event.maps_url}
@@ -247,7 +244,7 @@ const VenueCard = ({ label, icon: Icon, accentClass, event, fadeUp, config }) =>
               onClick={() => setShowCalendar(true)}
               className={cn(
                 "flex items-center justify-center gap-1.5 py-3 rounded-xl text-xs font-medium transition-colors",
-                "bg-white border border-rose-200 text-rose-500 hover:bg-rose-50 active:bg-rose-100",
+                "bg-white border border-[#C8D4A0] text-[#6B7A3A] hover:bg-[#f5f2e8] active:bg-[#ece8da]",
               )}
             >
               <CalendarPlus className={cn("w-3.5 h-3.5")} />
@@ -279,7 +276,7 @@ export default function Location() {
     <section
       id="location"
       className={cn("relative overflow-hidden")}
-      style={{ background: "linear-gradient(160deg, #fdf8f6 0%, #fef0f0 50%, #fdf8f6 100%)" }}
+      style={{ background: "linear-gradient(160deg, #fdfcf8 0%, #f5efe3 50%, #fdfcf8 100%)" }}
     >
       <div className={cn("container mx-auto px-5 py-16 relative z-10")}>
         <motion.div
@@ -289,16 +286,16 @@ export default function Location() {
           viewport={{ once: true }}
           className={cn("text-center space-y-3 mb-12")}
         >
-          <motion.span variants={fadeUp} className={cn("inline-block text-rose-400 font-medium text-sm")}>
+          <motion.span variants={fadeUp} className={cn("inline-block text-[#6B7A3A] font-medium text-sm")}>
             Mekan Bilgileri
           </motion.span>
           <motion.h2 variants={fadeUp} className={cn("text-3xl font-serif text-gray-800")}>
             Konumlar
           </motion.h2>
           <motion.div variants={scaleIn} className={cn("flex items-center justify-center gap-4 pt-2")}>
-            <div className={cn("h-px w-10 bg-rose-200")} />
-            <MapPin className={cn("w-4 h-4 text-rose-300")} />
-            <div className={cn("h-px w-10 bg-rose-200")} />
+            <div className={cn("h-px w-10 bg-[#C8D4A0]")} />
+            <MapPin className={cn("w-4 h-4 text-[#8BA052]")} />
+            <div className={cn("h-px w-10 bg-[#C8D4A0]")} />
           </motion.div>
         </motion.div>
 
@@ -317,11 +314,11 @@ export default function Location() {
           />
           <VenueCard
             label="Nikah Töreni"
-            icon={Heart}
+            icon={Flower2}
             accentClass={{
-              bg: "bg-rose-100",
-              icon: "text-rose-500",
-              btn: "bg-rose-500 text-white hover:bg-rose-600 active:bg-rose-700",
+              bg: "bg-[#DCE8C0]",
+              icon: "text-[#6B7A3A]",
+              btn: "bg-[#6B7A3A] text-white hover:bg-[#5A6830] active:bg-[#4E6228]",
             }}
             event={config.nikah}
             fadeUp={fadeUp}

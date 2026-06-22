@@ -73,7 +73,7 @@ const BottomBar = () => {
                 className={cn(
                   "flex flex-col items-center justify-center py-2.5 px-4 rounded-xl transition-all duration-300",
                   "active:bg-gray-100 cursor-pointer min-w-[72px]",
-                  active === item.id ? "bg-rose-50" : "hover:bg-gray-50/80",
+                  active === item.id ? "bg-[#6B7A3A]/10" : "hover:bg-gray-50/80",
                 )}
                 whileTap={{ scale: 0.93 }}
                 onClick={(e) => handleMenuClick(e, item.href, item.id)}
@@ -86,7 +86,7 @@ const BottomBar = () => {
                     className={cn(
                       "h-5 w-5 mb-1 transition-all duration-300",
                       active === item.id
-                        ? "stroke-rose-500 stroke-[2.5px]"
+                        ? "stroke-[#6B7A3A] stroke-[2.5px]"
                         : "stroke-gray-500 stroke-2",
                     )}
                   />
@@ -94,7 +94,7 @@ const BottomBar = () => {
                 <span
                   className={cn(
                     "text-[11px] font-medium transition-all duration-300",
-                    active === item.id ? "text-rose-500" : "text-gray-500",
+                    active === item.id ? "text-[#6B7A3A]" : "text-gray-500",
                   )}
                 >
                   {item.label}
